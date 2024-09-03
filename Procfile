@@ -1,1 +1,1 @@
-web: gunicorn orcamentos.wsgi --log-file -
+web: python -m gunicorn --chdir orcamentos orcamentos.wsgi --log-file -
