@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<header class="main_header container">
+    <div class="content">
+
+        <div class="main_header_logo">
+            <img src="{% static 'img/Logo1.png' %}" alt="logo.png" title="Loop Nerd"/>
+
+        </div>
+
+    </div>
+</header>
+
+<nav id="app-menu">
+
+    <div id="app-menu-lateral">
+
+        <div id="app-config">
+
+            <span class="title"><i class="icon icon-cube"></i>Menu</span>
+            <ul>
+                <li> <a href="{% url 'orcamento' %}"  title="Facebook">- Add Orcamentos</li>
+                <li> <a href="#" title="Twitter">- Home</li>
+
+            </ul>
+
+        </div>
+        <div id="app-seta"><i class="icon icon-angle-right"></i></div>
+
+    </div>
+
+</nav><!--app-menu-->
+
+<main class="main_content container">
+
+
+    <section class="section-seu-codigo container">
+        <h1 class="section_title"><strong> Orçamentos </strong></h1>
+        <div class="content">
+                <form action="?" method="GET">
+                    <div class="center-txt">
+                        <div class="pesquisa">
+
+                            <input type="text" class="pesquisa-txt" value="{{request.get.pk}}" name="search" placeholder="OS" autocomplete="off">
+                            <button type="submit" class="btn-pesquisa">Buscar</button>
+
+                        </div>
+                    </div>
+
+                </form>
+            <div class="box-artigo">
+
+                <div class="style-tabela">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                        <tbody>
+
+                            <tr>
+                                <td class="top center"><i class="icofont-users-alt-4"></i><strong>OS</strong></td>
+                                <td class="top center"><strong>Cliente</strong></td>
+                                <td class="top center"><strong>Endereço</strong></td>
+                                <td class="top center"><strong>Serviço</strong></td>
+                                <td class="top center"><strong>Data</strong></td>
+                                <td class="top center"><strong>Valor</strong></td>
+                                <td class="top center" colspan="2" width="1"><strong>Ações</strong></td>
+                                <td class="top center" colspan="2" width="1"><strong>PDF</strong></td>
+                            </tr>
+
+                        </tbody>
+
+                        <tbody>
+                            {% for orcamento in orcamentos %}
+
+                                <tr>
+                                    <td align="center">{{orcamento.id}}</td>
+                                    <td align="center">{{orcamento.cliente}}</td>
+                                    <td align="center">{{orcamento.endereco}}</td>
+                                    <td align="center">{{orcamento.servico}}</td>
+                                    <td align="center">{{orcamento.data}}</td>
+                                    <td align="center">R${{orcamento.valor|intcomma }}</td>
+                                    <td align="center"> <a href="{% url 'upd_orcamento' orcamento.pk %}" class="editar fa fa-check-circle" title="Editar"></a> </td>
+                                    <td align="center"> <a href="{% url 'del_orcamento' orcamento.pk %}" class="deletar fa fa-times-circle" title="Deletar"></a> </td>
+                                    <td align="center"> <a href="{% url 'gerar_pdf' orcamento.id %}" class="no-focus">Gerar PDF</a></td>
+
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div><!--tabela-->
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+            </div><!--Box Artigo-->
+
+
+        <div class="clear"></div>
+        </div>
+    </section><!--FECHA BOX HTML-->
+
+
+</main>
+
+<footer class="main_footer container">
+    <div class="main_footer_copy">
+
+        <p class="m-b-footer"> Regi Reformas - 2023, todos os direitos reservados.</p>
+        <p class="by"> Desenvolvido por: RP-Softwares</p>
+
+    </div>
+</footer>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+<script>
+
+    var app=0;
+    $("#app-seta").click(function(){
+
+      if(app==0){
+
+        $("#app-menu-lateral").css({"left":"0px"});
+        app=1;
+        $(this).html('<i class="icon icon-angle-left"></i>');
+
+      }else{
+
+        $("#app-menu-lateral").css({"left":"-150px"});
+        app=0;
+        $(this).html('<i class="icon icon-angle-right"></i>');
+
+      }
+
+    });
+
+</script>
+
+{% endblock%}

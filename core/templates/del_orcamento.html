@@ -1,0 +1,27 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width, initial-scale=1, shrink-to-fit=no">
+    {% bootstrap_css %}
+    <title>Del_Orcamento</title>
+</head>
+<body>
+    <div class="container">
+          <h1>Confirme a exclusão</h1>
+          <form method="post">
+              {% csrf_token %}
+              <p>Tem certeza que deseja deletar o Orcamento "{{ object }}"?</p>
+              {% buttons %}
+                <button type="submit" class="btn btn-danger">Confirmar</button>
+                <button type="button" class="btn btn-warning">
+                  <a href="{% url  'index' %}">Cancelar</a>
+                </button>
+              {% endbuttons %}
+    </form>
+    </div>
+
+{% bootstrap_javascript jquery='full' %}
+</body>
+</html>

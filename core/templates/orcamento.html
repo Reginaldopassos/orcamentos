@@ -1,0 +1,31 @@
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width, initial-scale=1, shrink-to-fit=no">
+    {% bootstrap_css %}
+    <title>Orçamento</title>
+</head>
+<body>
+    <div class="container">
+          <h1>Editar Orcamento</h1>
+          <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form%}
+              {% buttons %}
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-warning">
+                    <a href="{% url  'index' %}">Cancelar</a>
+                </button>
+
+              {% endbuttons%}
+
+
+          </form>
+    </div>
+
+{% bootstrap_javascript jquery='full' %}
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="Loop Nerd" content="Menu Lateral com html e Css" />
+    <meta name="description" content="Loop Nerd Códigos e sites pronto para você utilizar no seu negócio."/>
+    <meta name="keywords" content="Html, Css, Jquery, Wordpress, Sites Grátis, Tema para Wordpress, Site Responsivo"/>
+    <meta name="author" content="Loop Nerd" />
+    <meta name="URL" content="https://www.loopnerd.com.br/artigos/jquery/menu-lateral-css-html/"/>
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="robots" content="index, follow"/>
+
+    <!--[if lt IE 9]>
+        <script src="{% static 'js/html5shiv.js' %} "></script>
+    <![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fonts-icones.css' %}">
+
+
+    <title>Orçamentos</title>
+
+</head>
+<body>
+
+    {% block content %} {% endblock %}
+
+
+</body>
+</html>
