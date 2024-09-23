@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, CreateOrcaView, UpdOrcaView, DelOrcaView, gerar_os, login, gerar_pdf
+from .views import index, CreateOrcaView, UpdOrcaView, DelOrcaView, login, gerar_pdf
 
 urlpatterns = [
     path('', login, name='login'),
@@ -7,7 +7,6 @@ urlpatterns = [
     path('orcamento/', CreateOrcaView.as_view(), name='orcamento'),
     path('<int:pk>/update/', UpdOrcaView.as_view(), name='upd_orcamento'),
     path('<int:pk>/Delete/', DelOrcaView.as_view(), name='del_orcamento'),
-    path('os/<int:pk>', gerar_os, name='gerar_os'),
     path('os/<int:pk>/pdf/', gerar_pdf, name='gerar_pdf'),
 
 ]

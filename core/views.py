@@ -17,15 +17,14 @@ class index(ListView):
     model = Orcamento
     template_name = 'index.html'
     context_object_name = 'orcamentos'
-    paginate_by = 10
-
+    paginate_by = 20
     def get_queryset(self):
         search = self.request.GET.get('search')
         if search:
             busca = Orcamento.objects.filter(pk__icontains=search)
         else:
             busca = Orcamento.objects.all()
-        return busca
+        return busca.order_by('pk')
 
 class CreateOrcaView(CreateView):
     model = Orcamento
@@ -35,7 +34,7 @@ class CreateOrcaView(CreateView):
 
 class UpdOrcaView(UpdateView):
     model = Orcamento
-    template_name = 'orcamento.html'
+    template_name = 'update-orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
@@ -44,19 +43,6 @@ class DelOrcaView(DeleteView):
     template_name = 'del_orcamento.html'
     success_url = reverse_lazy('index')
 
-
-def gerar_os(request, pk):
-    orc = Orcamento.objects.get(id=pk)
-
-    # Dividindo a descrição por ponto e vírgula e garantindo que cada item seja tratado corretamente.
-    formatted_list = [item.strip() for item in orc.descricao.split(';') if item.strip()]
-
-    context = {
-        'pdf': orc,
-        'formatted_list': formatted_list
-    }
-
-    return render(request, 'pdf-orcamento.html', context)
 
 def gerar_pdf(request, pk):
     orc = get_object_or_404(Orcamento, pk=pk)
