@@ -1,1 +1,1 @@
-gunicorn orcamentos.wsgi --log-file -
+web: python run_gunicorn.py
