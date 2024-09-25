@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'orcamentos.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'railway',
         'USER': 'postgres',
         'PASSWORD': 'RYbDAgzNsyXLVKWznAquflHNTwkwwJRH',
@@ -90,6 +90,9 @@ DATABASES = {
         'PORT': '5432',
 
     }
+}
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),conn_max_age=600),
 }
 
 
