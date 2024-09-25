@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'orcamentos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -99,7 +99,10 @@ DATABASES = {
 #DATABASES = {
  #   'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
 #}
-
+"""
+DATABASES = {
+    'default': dj_database_url.config(default='postgresql://postgres:RYbDAgzNsyXLVKWznAquflHNTwkwwJRH@postgres.railway.internal:5432/railway', conn_max_age=600)
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
