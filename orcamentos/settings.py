@@ -27,8 +27,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['orcamentos-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['orcamentos-production.up.railway.app']
+ALLOWED_HOSTS = ['https://orcamentos-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://orcamentos-production.up.railway.app']
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
 
 # Application definition
 
