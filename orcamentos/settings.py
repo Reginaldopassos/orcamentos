@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['orcamentos-production.up.railway.app']
-
+CSRF_TRUSTED_ORIGINS = ['orcamentos-production.up.railway.app']
 
 # Application definition
 
