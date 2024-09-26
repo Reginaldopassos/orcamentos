@@ -37,7 +37,7 @@ class CreateOrcaView(CreateView):
 
 class UpdOrcaView(UpdateView):
     model = Orcamento
-    template_name = 'update-orcamento.html'
+    template_name = 'orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
