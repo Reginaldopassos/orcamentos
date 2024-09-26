@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
+from django.views.decorators.csrf import csrf_exempt
 import os
 from django.conf import settings
 
@@ -26,18 +27,21 @@ class index(ListView):
             busca = Orcamento.objects.all()
         return busca.order_by('pk')
 
+@csrf_exempt
 class CreateOrcaView(CreateView):
     model = Orcamento
     template_name = 'orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
+@csrf_exempt
 class UpdOrcaView(UpdateView):
     model = Orcamento
     template_name = 'update-orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
+@csrf_exempt
 class DelOrcaView(DeleteView):
     model = Orcamento
     template_name = 'del_orcamento.html'
