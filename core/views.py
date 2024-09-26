@@ -27,21 +27,21 @@ class index(ListView):
             busca = Orcamento.objects.all()
         return busca.order_by('pk')
 
-@csrf_exempt
+
 class CreateOrcaView(CreateView):
     model = Orcamento
     template_name = 'orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
-@csrf_exempt
+
 class UpdOrcaView(UpdateView):
     model = Orcamento
     template_name = 'update-orcamento.html'
     fields = ['cliente', 'endereco', 'servico', 'descricao', 'valor']
     success_url = reverse_lazy('index')
 
-@csrf_exempt
+
 class DelOrcaView(DeleteView):
     model = Orcamento
     template_name = 'del_orcamento.html'
