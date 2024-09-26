@@ -22,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'lkasdlkamsldmasldma'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'orcamentos.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -91,15 +91,12 @@ DATABASES = {
 
     }
 }
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'),conn_max_age=600),
-}
 
-"""
 
-DATABASES = {
-    "default": dj_database_url.parse("postgresql://orcamentos_render_user:1CUIzhMmw7iqcSDrO9BzwQqghSfzyQRm@dpg-crqdgie8ii6s73ct1j30-a.oregon-postgres.render.com/orcamentos_render"),
-}
+
+#DATABASES = {
+ #   "default": dj_database_url.parse("postgresql://orcamentos_render_user:1CUIzhMmw7iqcSDrO9BzwQqghSfzyQRm@dpg-crqdgie8ii6s73ct1j30-a.oregon-postgres.render.com/orcamentos_render"),
+#}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
