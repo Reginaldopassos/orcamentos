@@ -94,7 +94,7 @@
             </div>
             <div class="form-group">
                 <label for="valor"><strong>Valor</strong></label>
-                {{ form.valor }}
+                <input type="text" class="form-control" id="valor" name="valor" value="{{ form.valor.value }}">
             </div>
             <button type="submit" class="btn">Salvar</button>
             <button type="button" class="btn-cancelar">
