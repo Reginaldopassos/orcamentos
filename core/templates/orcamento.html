@@ -80,7 +80,7 @@
     <div class="container mt-5">
         <div class="titulo"> <h1><strong> Cadastro de Orçamentos</strong> </h1></div>
         <form method="post">
-
+            {% csrf_token %}
             <div class="form-group">
                 <label for="cliente"> <strong> Cliente </strong> </label>
                 <input type="text" class="form-control" id="cliente" name="cliente" required >

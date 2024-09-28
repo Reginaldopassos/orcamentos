@@ -54,35 +54,62 @@ def gerar_pdf(request, pk):
     response['Content-Disposition'] = f'attachment; filename="orcamento_{orc.id}.pdf"'
     p = canvas.Canvas(response, pagesize=A4)
 
+    # Tamanho da página A4 (em mm)
+    PAGE_HEIGHT = A4[1]
+    MARGIN_BOTTOM = 20 * mm  # Margem inferior
+    LINE_HEIGHT = 10 * mm  # Espaço entre as linhas
+    y = 250 * mm  # Posição inicial vertical
+
     # Configuração da fonte
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(20 * mm, 250 * mm, "REGI REFORMAS")
+    p.drawString(20 * mm, y, "REGI REFORMAS")
 
+    y -= 10 * mm
     p.setFont("Helvetica", 10)
-    p.drawString(20 * mm, 240 * mm, "ENDEREÇO: RUA BELO HORIZONTE 182")
-    p.drawString(20 * mm, 235 * mm, "CNPJ: 35.453.960/0001-91")
+    p.drawString(20 * mm, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
+    y -= 5 * mm
+    p.drawString(20 * mm, y, "CNPJ: 35.453.960/0001-91")
 
+    y -= 20 * mm
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(20 * mm, 220 * mm, "ORÇAMENTO")
+    p.drawString(20 * mm, y, "ORÇAMENTO")
 
+    y -= 10 * mm
     p.setFont("Helvetica", 12)
-    p.drawString(20 * mm, 210 * mm, f"Cliente: {orc.cliente}")
-    p.drawString(20 * mm, 200 * mm, f"Rua: {orc.endereco}")
-    p.drawString(20 * mm, 190 * mm, f"OS: {orc.id}")
-    p.drawString(20 * mm, 180 * mm, f"Serviço: {orc.servico}")
+    p.drawString(20 * mm, y, f"Cliente: {orc.cliente}")
+    y -= 10 * mm
+    p.drawString(20 * mm, y, f"Rua: {orc.endereco}")
+    y -= 10 * mm
+    p.drawString(20 * mm, y, f"OS: {orc.id}")
+    y -= 10 * mm
+    p.drawString(20 * mm, y, f"Serviço: {orc.servico}")
 
-    p.drawString(20 * mm, 170 * mm, "Descrição detalhada:")
-    y = 160 * mm
+    y -= 10 * mm
+    p.drawString(20 * mm, y, "Descrição detalhada:")
+
+    y -= 10 * mm
+
+    # Iterar sobre os itens da descrição
     for item in orc.descricao.split(';'):
         item = item.strip()
         if item:
+            if y <= MARGIN_BOTTOM:  # Verifica se estamos na margem inferior da página
+                p.showPage()  # Cria uma nova página
+                p.setFont("Helvetica", 12)
+                y = PAGE_HEIGHT - 20 * mm  # Recomeça no topo da nova página
+
             p.drawString(30 * mm, y, f"- {item}")
-            y -= 10 * mm
+            y -= LINE_HEIGHT  # Move para a próxima linha
+
+    # Verifica novamente se temos espaço suficiente para o valor na página
+    if y <= MARGIN_BOTTOM:
+        p.showPage()
+        p.setFont("Helvetica-Bold", 12)
+        y = PAGE_HEIGHT - 20 * mm
 
     # Formatar o valor como moeda
-    formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')  # Exemplo: R$ 1.234,56
-    p.setFont("Helvetica-Bold", 12)
-    p.drawString(20 * mm, y - 10 * mm, f"Valor: {formatted_valor}")
+    formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')
+    p.drawString(20 * mm, y, f"Valor: {formatted_valor}")
 
     p.showPage()
     p.save()
