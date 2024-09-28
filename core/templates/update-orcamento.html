@@ -5,44 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Orçamento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #a1a4b2;
+            background-color: #3b4344;
+            font-family: 'Inter', sans-serif;
         }
         .btn-warning a {
             color: inherit;
             text-decoration: none;
         }
+        .container{
+            width: 450px;
+            height: auto;
+            padding: 20px;
+            border-radius: 8px;
+            min-width: 360px;
+            box-shadow: 10px 10px 4px #221d21;
+            background-color: #e6e6e6;
+        }
+        .container h1{
+            font-size: 25px;
+        }
+        .btn{
+            background-color: #433d3d;
+            color: #fff;
+            border-radius: 10px;
+            border: none;
+        }
+        .btn:hover{
+            background-color: #000000;
+            color: #fff;
+            border-radius: 10px;
+            border: none;
+        }
+        .btn-cancelar {
+            background-color: #e6e6e6;
+            color: #3b4344;
+            border-radius: 10px;
+            border: none;
+        }
+        .btn-cancelar a{
+            background-color: #e6e6e6;
+            color: #3b4344;
+            text-decoration: none;
+        }
+        .titulo{
+            height: 60px;
+        }
+        .label{
+            height: 50px;
+        }
+        .container label{
+            height: 20px;
+        input {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        input:active {
+            background-color: #d3d3d3;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Editar Orçamento</h1>
+        <div class="titulo"> <h1><strong>Atualizar Orçamento</strong> </h1></div>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="cliente">Cliente</label>
-                <input type="text" class="form-control" id="cliente" name="cliente" required>
+                <label for="cliente"><strong>Cliente</strong></label>
+                <input type="text" class="form-control" id="cliente" name="cliente" value="{{ form.cliente.value }}" required>
             </div>
             <div class="form-group">
-                <label for="endereco">Endereço</label>
-                <input type="text" class="form-control" id="endereco" name="endereco" required>
+                <label for="endereco"><strong>Endereço</strong></label>
+                <input type="text" class="form-control" id="endereco" name="endereco" value="{{ form.endereco.value }}">
             </div>
             <div class="form-group">
-                <label for="servico">Serviço</label>
-                <input type="text" class="form-control" id="servico" name="servico" required>
+                <label for="servico"><strong>Serviço</strong></label>
+                <input type="text" class="form-control" id="servico" name="servico" value="{{ form.servico.value }}">
             </div>
             <div class="form-group">
-                <label for="descricao">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+                <label for="descricao"><strong>Descrição</strong></label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3" required>{{ form.descricao.value }}</textarea>
             </div>
             <div class="form-group">
-                <label for="valor">Valor</label>
-                <input type="number" class="form-control" id="valor" name="valor" required>
+                <label for="valor"><strong>Valor</strong></label>
+                <input type="number" class="form-control" id="valor" name="valor" value="{{ form.valor.value }}" required>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="button" class="btn btn-warning">
-                <a href="{% url 'index' %}">Cancelar</a>
+            <button type="submit" class="btn">Salvar</button>
+            <button type="button" class="btn-cancelar">
+                <a href="/index/">Cancelar</a>
             </button>
         </form>
     </div>
