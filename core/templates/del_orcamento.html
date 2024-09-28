@@ -16,7 +16,7 @@
         <h1>Confirme a exclusão</h1>
         <form method="post">
             {% csrf_token %}
-            <p>Tem certeza que deseja deletar o Orcamento "{{ object }}"?</p>
+            <p>Tem certeza que deseja deletar o Orcamento do Cliente"{{ object }}"?</p>
             <button type="submit" class="btn btn-danger">Confirmar</button>
             <a href="{% url 'index' %}" class="btn btn-warning">Cancelar</a>
         </form>

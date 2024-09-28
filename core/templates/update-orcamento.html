@@ -78,7 +78,7 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="cliente"> <strong> Cliente </strong> </label>
+                <label for="cliente"> <strong> Nome completo do Cliente </strong> </label>
                 <input type="text" class="form-control" id="cliente" name="cliente" value="{{ form.instance.cliente }}" required>
             </div>
             <div class="form-group">
@@ -95,7 +95,7 @@
             </div>
             <div class="form-group">
                 <label for="valor"> <strong> Valor </strong> </label>
-                <input type="number" class="form-control" id="valor" name="valor" value="{{ form.instance.valor }}" required>
+                <input type="number" class="form-control" id="valor" name="valor" value="{{ form.instance.valor }}" required placeholder="Digite o novo valor">
             </div>
             <button type="submit" class="btn">Salvar</button>
             <button type="button" class="btn-cancelar">
