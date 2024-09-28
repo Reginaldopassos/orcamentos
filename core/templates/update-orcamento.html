@@ -93,8 +93,8 @@
                 <textarea class="form-control" id="descricao" name="descricao" rows="3" required>{{ form.descricao.value }}</textarea>
             </div>
             <div class="form-group">
-                <label for="valor"><strong>Valor</strong></label>
-                <input type="text" class="form-control" id="valor" name="valor" value="{{ form.valor.value }}">
+                <label ><strong>Valor</strong></label>
+                {{ form.valor }}
             </div>
             <button type="submit" class="btn">Salvar</button>
             <button type="button" class="btn-cancelar">
