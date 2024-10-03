@@ -56,14 +56,14 @@ def gerar_pdf(request, pk):
 
     # Tamanho da página A4 (em mm)
     PAGE_WIDTH, PAGE_HEIGHT = A4
-    MARGIN_LEFT = 20 * mm
-    MARGIN_RIGHT = PAGE_WIDTH - 20 * mm
-    MARGIN_TOP = PAGE_HEIGHT - 20 * mm
-    MARGIN_BOTTOM = 20 * mm
-    LINE_HEIGHT = 10 * mm  # Espaço entre as linhas
-    y = MARGIN_TOP
+    MARGIN_LEFT = 25 * mm  # Aumentei a margem esquerda
+    MARGIN_RIGHT = PAGE_WIDTH - 25 * mm  # Aumentei a margem direita
+    MARGIN_TOP = PAGE_HEIGHT - 25 * mm  # Aumentei a margem superior
+    MARGIN_BOTTOM = 25 * mm  # Aumentei a margem inferior
+    LINE_HEIGHT = 12 * mm  # Aumentei o espaço entre as linhas
+    y = MARGIN_TOP  # Posicionamento inicial logo abaixo do topo da margem
 
-    # Função para desenhar bordas
+    # Função para desenhar bordas com espaçamento maior
     def desenhar_margens():
         p.setStrokeColorRGB(0, 0, 0)  # Cor preta para as bordas
         p.setLineWidth(1)
@@ -76,30 +76,30 @@ def gerar_pdf(request, pk):
     p.setFont("Helvetica-Bold", 12)
     p.drawString(MARGIN_LEFT, y, "REGI REFORMAS")
 
-    y -= 10 * mm
+    y -= 12 * mm  # Ajustei o espaçamento vertical
     p.setFont("Helvetica", 10)
     p.drawString(MARGIN_LEFT, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
-    y -= 5 * mm
+    y -= 6 * mm
     p.drawString(MARGIN_LEFT, y, "CNPJ: 35.453.960/0001-91")
 
-    y -= 20 * mm
+    y -= 25 * mm  # Aumentei o espaçamento antes do título "ORÇAMENTO"
     p.setFont("Helvetica-Bold", 12)
     p.drawString(MARGIN_LEFT, y, "ORÇAMENTO")
 
-    y -= 10 * mm
+    y -= 12 * mm
     p.setFont("Helvetica", 12)
     p.drawString(MARGIN_LEFT, y, f"Cliente: {orc.cliente}")
-    y -= 10 * mm
+    y -= 12 * mm
     p.drawString(MARGIN_LEFT, y, f"Rua: {orc.endereco}")
-    y -= 10 * mm
+    y -= 12 * mm
     p.drawString(MARGIN_LEFT, y, f"OS: {orc.id}")
-    y -= 10 * mm
+    y -= 12 * mm
     p.drawString(MARGIN_LEFT, y, f"Serviço: {orc.servico}")
 
-    y -= 10 * mm
+    y -= 12 * mm
     p.drawString(MARGIN_LEFT, y, "Descrição detalhada:")
 
-    y -= 10 * mm
+    y -= 12 * mm
 
     # Iterar sobre os itens da descrição
     for item in orc.descricao.split(';'):
@@ -109,7 +109,7 @@ def gerar_pdf(request, pk):
                 p.showPage()  # Cria uma nova página
                 desenhar_margens()  # Desenha margens na nova página
                 p.setFont("Helvetica", 12)
-                y = MARGIN_TOP - 20 * mm  # Recomeça abaixo do topo da nova página
+                y = MARGIN_TOP - 25 * mm  # Recomeça abaixo do topo da nova página
 
             p.drawString(MARGIN_LEFT + 10 * mm, y, f"- {item}")
             y -= LINE_HEIGHT  # Move para a próxima linha
@@ -119,7 +119,7 @@ def gerar_pdf(request, pk):
         p.showPage()
         desenhar_margens()
         p.setFont("Helvetica-Bold", 12)
-        y = MARGIN_TOP - 20 * mm
+        y = MARGIN_TOP - 25 * mm
 
     # Formatar o valor como moeda
     formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')
