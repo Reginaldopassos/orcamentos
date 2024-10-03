@@ -24,32 +24,23 @@
 </head>
 <body>
     <div class="page">
-        <form class="formLogin">
+        <form class="formLogin" method="POST">
+            {% csrf_token %}
             <h1>Login</h1>
             <p>Digite os seus dados de acesso no campo abaixo.</p>
             <label for="email">E-mail</label>
-            <input type="text" placeholder="Digite seu Usuário" autofocus="true" id="login"/>
+            <input type="text" name="username" placeholder="Digite seu Usuário" autofocus="true" id="login"/>
             <label for="password">Senha</label>
-            <input type="password" placeholder="Digite sua senha" id="senha"/>
+            <input type="password" name="password" placeholder="Digite sua senha" id="senha"/>
 
-            <input type="submit" value="Acessar" class="btn" onclick="logar(); return false"/>
+            <input type="submit" value="Acessar" class="btn"/>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
         </form>
     </div>
 
-<script>
-    function logar(){
-        var login = document.getElementById('login').value;
-        var senha = document.getElementById('senha').value;
 
-        if (login == "admin" && senha == "admin"){
-            location.href = "{% url 'index' %}";
-
-        }else{
-            alert("Usuário ou senha incorretos");
-        }
-    }
-
-</script>
 
 </body>
 </html>

@@ -1,6 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from .models import Orcamento
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -8,6 +7,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
 from datetime import datetime
+from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 import os
 from django.conf import settings
@@ -131,3 +131,22 @@ def gerar_pdf(request, pk):
     p.showPage()
     p.save()
     return response
+
+
+def login_index(request):
+    if request.method == "POST":
+        username = request.POST['username']  # Captura o valor do campo username
+        password = request.POST['password']  # Captura o valor do campo password
+
+        # Autentica o usuário
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            # Faz o login e redireciona para a página inicial (ou outra página de destino)
+            login(request, user)
+            return redirect('index')  # Altere 'home' para o nome da sua view de redirecionamento
+        else:
+            # Se a autenticação falhar, retorna uma mensagem de erro
+            return render(request, 'login.html', {'error': 'Usuário ou senha inválidos'})
+
+    return render(request, 'login.html')
