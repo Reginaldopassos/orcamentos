@@ -55,37 +55,49 @@ def gerar_pdf(request, pk):
     p = canvas.Canvas(response, pagesize=A4)
 
     # Tamanho da página A4 (em mm)
-    PAGE_HEIGHT = A4[1]
-    MARGIN_BOTTOM = 20 * mm  # Margem inferior
+    PAGE_WIDTH, PAGE_HEIGHT = A4
+    MARGIN_LEFT = 20 * mm
+    MARGIN_RIGHT = PAGE_WIDTH - 20 * mm
+    MARGIN_TOP = PAGE_HEIGHT - 20 * mm
+    MARGIN_BOTTOM = 20 * mm
     LINE_HEIGHT = 10 * mm  # Espaço entre as linhas
-    y = 250 * mm  # Posição inicial vertical
+    y = MARGIN_TOP
+
+    # Função para desenhar bordas
+    def desenhar_margens():
+        p.setStrokeColorRGB(0, 0, 0)  # Cor preta para as bordas
+        p.setLineWidth(1)
+        p.rect(MARGIN_LEFT, MARGIN_BOTTOM, MARGIN_RIGHT - MARGIN_LEFT, MARGIN_TOP - MARGIN_BOTTOM)
+
+    # Desenhar bordas iniciais
+    desenhar_margens()
 
     # Configuração da fonte
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(20 * mm, y, "REGI REFORMAS")
+    p.drawString(MARGIN_LEFT, y, "REGI REFORMAS")
 
     y -= 10 * mm
     p.setFont("Helvetica", 10)
-    p.drawString(20 * mm, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
+    p.drawString(MARGIN_LEFT, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
     y -= 5 * mm
-    p.drawString(20 * mm, y, "CNPJ: 35.453.960/0001-91")
+    p.drawString(MARGIN_LEFT, y, "CNPJ: 35.453.960/0001-91")
 
     y -= 20 * mm
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(20 * mm, y, "ORÇAMENTO")
+    p.drawString(MARGIN_LEFT, y, "ORÇAMENTO")
 
     y -= 10 * mm
     p.setFont("Helvetica", 12)
-    p.drawString(20 * mm, y, f"Cliente: {orc.cliente}")
+    p.drawString(MARGIN_LEFT, y, f"Cliente: {orc.cliente}")
     y -= 10 * mm
-    p.drawString(20 * mm, y, f"Rua: {orc.endereco}")
+    p.drawString(MARGIN_LEFT, y, f"Rua: {orc.endereco}")
     y -= 10 * mm
-    p.drawString(20 * mm, y, f"OS: {orc.id}")
+    p.drawString(MARGIN_LEFT, y, f"OS: {orc.id}")
     y -= 10 * mm
-    p.drawString(20 * mm, y, f"Serviço: {orc.servico}")
+    p.drawString(MARGIN_LEFT, y, f"Serviço: {orc.servico}")
 
     y -= 10 * mm
-    p.drawString(20 * mm, y, "Descrição detalhada:")
+    p.drawString(MARGIN_LEFT, y, "Descrição detalhada:")
 
     y -= 10 * mm
 
@@ -95,21 +107,23 @@ def gerar_pdf(request, pk):
         if item:
             if y <= MARGIN_BOTTOM:  # Verifica se estamos na margem inferior da página
                 p.showPage()  # Cria uma nova página
+                desenhar_margens()  # Desenha margens na nova página
                 p.setFont("Helvetica", 12)
-                y = PAGE_HEIGHT - 20 * mm  # Recomeça no topo da nova página
+                y = MARGIN_TOP - 20 * mm  # Recomeça abaixo do topo da nova página
 
-            p.drawString(30 * mm, y, f"- {item}")
+            p.drawString(MARGIN_LEFT + 10 * mm, y, f"- {item}")
             y -= LINE_HEIGHT  # Move para a próxima linha
 
     # Verifica novamente se temos espaço suficiente para o valor na página
     if y <= MARGIN_BOTTOM:
         p.showPage()
+        desenhar_margens()
         p.setFont("Helvetica-Bold", 12)
-        y = PAGE_HEIGHT - 20 * mm
+        y = MARGIN_TOP - 20 * mm
 
     # Formatar o valor como moeda
     formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')
-    p.drawString(20 * mm, y, f"Valor: {formatted_valor}")
+    p.drawString(MARGIN_LEFT, y, f"Valor: {formatted_valor}")
 
     p.showPage()
     p.save()
