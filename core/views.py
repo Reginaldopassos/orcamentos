@@ -56,48 +56,50 @@ def gerar_pdf(request, pk):
 
     # Tamanho da página A4 (em mm)
     PAGE_WIDTH, PAGE_HEIGHT = A4
-    MARGIN_LEFT = 25 * mm  # Aumentei a margem esquerda
-    MARGIN_RIGHT = PAGE_WIDTH - 25 * mm  # Aumentei a margem direita
-    MARGIN_TOP = PAGE_HEIGHT - 25 * mm  # Aumentei a margem superior
-    MARGIN_BOTTOM = 25 * mm  # Aumentei a margem inferior
-    LINE_HEIGHT = 12 * mm  # Aumentei o espaço entre as linhas
-    y = MARGIN_TOP  # Posicionamento inicial logo abaixo do topo da margem
+    MARGIN_LEFT = 13 * mm  # Margem externa esquerda
+    MARGIN_RIGHT = PAGE_WIDTH - 13 * mm  # Margem externa direita
+    MARGIN_TOP = PAGE_HEIGHT - 13 * mm  # Margem externa superior
+    MARGIN_BOTTOM = 13 * mm  # Margem externa inferior
 
-    # Função para desenhar bordas com espaçamento maior
+    PADDING = 10 * mm  # Espaçamento entre o conteúdo e as margens
+    LINE_HEIGHT = 12 * mm  # Espaço entre as linhas
+    y = MARGIN_TOP - PADDING  # Posicionamento inicial logo abaixo do topo da margem
+
+    # Função para desenhar as margens
     def desenhar_margens():
         p.setStrokeColorRGB(0, 0, 0)  # Cor preta para as bordas
         p.setLineWidth(1)
         p.rect(MARGIN_LEFT, MARGIN_BOTTOM, MARGIN_RIGHT - MARGIN_LEFT, MARGIN_TOP - MARGIN_BOTTOM)
 
-    # Desenhar bordas iniciais
+    # Desenhar as margens da primeira página
     desenhar_margens()
 
     # Configuração da fonte
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(MARGIN_LEFT, y, "REGI REFORMAS")
+    p.drawString(MARGIN_LEFT + PADDING, y, "REGI REFORMAS")
 
-    y -= 12 * mm  # Ajustei o espaçamento vertical
+    y -= 12 * mm
     p.setFont("Helvetica", 10)
-    p.drawString(MARGIN_LEFT, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
+    p.drawString(MARGIN_LEFT + PADDING, y, "ENDEREÇO: RUA BELO HORIZONTE 182")
     y -= 6 * mm
-    p.drawString(MARGIN_LEFT, y, "CNPJ: 35.453.960/0001-91")
+    p.drawString(MARGIN_LEFT + PADDING, y, "CNPJ: 35.453.960/0001-91")
 
-    y -= 25 * mm  # Aumentei o espaçamento antes do título "ORÇAMENTO"
+    y -= 25 * mm  # Espaço extra antes do título "ORÇAMENTO"
     p.setFont("Helvetica-Bold", 12)
-    p.drawString(MARGIN_LEFT, y, "ORÇAMENTO")
+    p.drawString(MARGIN_LEFT + PADDING, y, "ORÇAMENTO")
 
     y -= 12 * mm
     p.setFont("Helvetica", 12)
-    p.drawString(MARGIN_LEFT, y, f"Cliente: {orc.cliente}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"Cliente: {orc.cliente}")
     y -= 12 * mm
-    p.drawString(MARGIN_LEFT, y, f"Rua: {orc.endereco}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"Rua: {orc.endereco}")
     y -= 12 * mm
-    p.drawString(MARGIN_LEFT, y, f"OS: {orc.id}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"OS: {orc.id}")
     y -= 12 * mm
-    p.drawString(MARGIN_LEFT, y, f"Serviço: {orc.servico}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"Serviço: {orc.servico}")
 
     y -= 12 * mm
-    p.drawString(MARGIN_LEFT, y, "Descrição detalhada:")
+    p.drawString(MARGIN_LEFT + PADDING, y, "Descrição detalhada:")
 
     y -= 12 * mm
 
@@ -105,25 +107,25 @@ def gerar_pdf(request, pk):
     for item in orc.descricao.split(';'):
         item = item.strip()
         if item:
-            if y <= MARGIN_BOTTOM:  # Verifica se estamos na margem inferior da página
+            if y <= MARGIN_BOTTOM + PADDING:  # Verifica se estamos próximo da margem inferior
                 p.showPage()  # Cria uma nova página
                 desenhar_margens()  # Desenha margens na nova página
                 p.setFont("Helvetica", 12)
-                y = MARGIN_TOP - 25 * mm  # Recomeça abaixo do topo da nova página
+                y = MARGIN_TOP - PADDING  # Recomeça abaixo do topo da nova página
 
-            p.drawString(MARGIN_LEFT + 10 * mm, y, f"- {item}")
+            p.drawString(MARGIN_LEFT + PADDING + 10 * mm, y, f"- {item}")
             y -= LINE_HEIGHT  # Move para a próxima linha
 
     # Verifica novamente se temos espaço suficiente para o valor na página
-    if y <= MARGIN_BOTTOM:
+    if y <= MARGIN_BOTTOM + PADDING:
         p.showPage()
         desenhar_margens()
         p.setFont("Helvetica-Bold", 12)
-        y = MARGIN_TOP - 25 * mm
+        y = MARGIN_TOP - PADDING
 
     # Formatar o valor como moeda
     formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')
-    p.drawString(MARGIN_LEFT, y, f"Valor: {formatted_valor}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"Valor: {formatted_valor}")
 
     p.showPage()
     p.save()
