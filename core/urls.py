@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, CreateOrcaView, UpdOrcaView, DelOrcaView, login_index, gerar_pdf,
+from .views import index, CreateOrcaView, UpdOrcaView, DelOrcaView, login_index, gerar_pdf
 
 urlpatterns = [
     path('', login_index, name='login'),
