@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
+from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 import os
 from django.conf import settings
@@ -53,7 +54,7 @@ def gerar_pdf(request, pk):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="orcamento_{orc.id}.pdf"'
     p = canvas.Canvas(response, pagesize=A4)
-
+    ano_atual = datetime.now().year
     # Tamanho da página A4 (em mm)
     PAGE_WIDTH, PAGE_HEIGHT = A4
     MARGIN_LEFT = 13 * mm  # Margem externa esquerda
@@ -94,7 +95,7 @@ def gerar_pdf(request, pk):
     y -= 12 * mm
     p.drawString(MARGIN_LEFT + PADDING, y, f"Rua: {orc.endereco}")
     y -= 12 * mm
-    p.drawString(MARGIN_LEFT + PADDING, y, f"OS: {orc.id}")
+    p.drawString(MARGIN_LEFT + PADDING, y, f"OS: {ano_atual}{orc.id}")
     y -= 12 * mm
     p.drawString(MARGIN_LEFT + PADDING, y, f"Serviço: {orc.servico}")
 
@@ -124,7 +125,7 @@ def gerar_pdf(request, pk):
         y = MARGIN_TOP - PADDING
 
     # Formatar o valor como moeda
-    formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', '.')
+    formatted_valor = f"R$ {orc.valor:,.2f}".replace('.', ',')
     p.drawString(MARGIN_LEFT + PADDING, y, f"Valor: {formatted_valor}")
 
     p.showPage()
