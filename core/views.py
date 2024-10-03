@@ -12,8 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 from django.conf import settings
 
-def login(request):
-    return render(request, 'login.html')
 
 class index(ListView):
     model = Orcamento
